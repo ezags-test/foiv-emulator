@@ -1,0 +1,1 @@
+web: bundle exec thin start -p $PORT --stats /thin_stats -e staging --log log/staging_thin.log
