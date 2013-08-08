@@ -26,7 +26,7 @@ set :keep_releases, 5
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
-set :server_port, 9000
+set :server_port, 12000
 
 set :bundle_cmd, 'bundle'
 set :bundle_without, [ :development, :test ]
@@ -46,8 +46,6 @@ end
 task :log do
   run "cd #{shared_path}/log && tail -f #{stage}.log"
 end
-
-after 'deploy:finalize_update', 'db:rename'
 
 after 'deploy:update', 'foreman:export'
 after 'deploy:update', 'deploy:cleanup'
