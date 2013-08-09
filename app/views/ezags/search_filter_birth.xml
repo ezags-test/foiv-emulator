@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <S:Header>
+    <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" S:actor="http://smev.gosuslugi.ru/actors/smev">
+      <wsse:BinarySecurityToken EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" wsu:Id="CertId">MIIDjzCCAz6gAwIBAgIKdv4jIQAAAAAEyDAIBgYqhQMCAgMwgYgxHjAcBgkqhkiG9w0BCQEWD29p
+dEBtaW5zdnlhei5ydTELMAkGA1UEBhMCUlUxFTATBgNVBAcMDNCc0L7RgdC60LLQsDEsMCoGA1UE
+Cgwj0JzQuNC90LrQvtC80YHQstGP0LfRjCDQoNC+0YHRgdC40LgxFDASBgNVBAMMC9Cj0KYg0K3Q
+n18xMB4XDTEyMTEyMjE0MDEwMFoXDTEzMTEyMjE0MTAwMFowgZAxCzAJBgNVBAYTAlJVMSUwIwYD
+VQQKHhwEHAQ4BD0EOgQ+BDwEQQQyBE8ENwRMACAEIAQkMS8wLQYDVQQLHiYEGAQhACAELQQ7BDUE
+OgRCBEAEPgQ9BD0ESwQ5ACAEFwQQBBMEITEpMCcGA1UEAx4gBBwEOAQ9BDoEPgQ8BEEEMgRPBDcE
+TAAgBCAEJAAgADIwYzAcBgYqhQMCAhMwEgYHKoUDAgIkAAYHKoUDAgIeAQNDAARACxNhPI3o9hHR
+TzP7QWdp6ayDAFLBVZt0+5jvQtitQHKW1wcYe5tk1DRNr+8ADhndVQMwH8oTXXyAX6yIsjuqPaOC
+AXwwggF4MA4GA1UdDwEB/wQEAwIE8DAZBgkqhkiG9w0BCQ8EDDAKMAgGBiqFAwICFTAkBgNVHSUE
+HTAbBgYqhQNkAgIGByqFAwICIgYGCCsGAQUFBwMCMB0GA1UdDgQWBBRlxZnxgmJGNfgyiLQolax7
+u0tpJDAfBgNVHSMEGDAWgBQ+5h+il5HGoBNa/X0Gk2cHXjzbxTBmBgNVHR8EXzBdMFugWaBXhiho
+dHRwOi8vbW9zY293LnJ0LnJ1L2Rvd25sb2FkL2NhX2VwXzEuY3JshitodHRwOi8vc3RhdGljLmdv
+c3VzbHVnaS5ydS9jZXJ0L2NhX2VwXzEuY3JsMH0GCCsGAQUFBwEBBHEwbzA0BggrBgEFBQcwAoYo
+aHR0cDovL21vc2Nvdy5ydC5ydS9kb3dubG9hZC9jYV9lcF8xLmNydDA3BggrBgEFBQcwAoYraHR0
+cDovL3N0YXRpYy5nb3N1c2x1Z2kucnUvY2VydC9jYV9lcF8xLmNydDAIBgYqhQMCAgMDQQAaYYtb
+3IZ+hpMi0gzI4derkBRR1PEfybfCpdCYYtgcqRjRc3GfpGvNPLOY+baUOQBOYNCD0hRi4P6nBv94
+3y8+</wsse:BinarySecurityToken>
+      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+          <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+          <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#gostr34102001-gostr3411"/>
+          <Reference URI="#body">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#gostr3411"/>
+            <DigestValue>IurBfXrMFPKW1UGow7DASnWCxDWpsZrfJ8Dq8ZJbVoc=</DigestValue>
+          </Reference>
+        </SignedInfo>
+        <SignatureValue>BkNBGO+6FzMsV5DpQE4CIMitJJc6j+NZ9Atcmxe0E23V3O6YtL8TIAV7O26eWJnrrpZ2qFdhCUKH
+btAEdBxOcw==</SignatureValue>
+        <KeyInfo>
+          <wsse:SecurityTokenReference>
+            <wsse:Reference URI="#CertId" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"/>
+          </wsse:SecurityTokenReference>
+        </KeyInfo>
+      </Signature>
+    </wsse:Security>
+  </S:Header>
+  <S:Body wsu:Id="body">
+    <ns6:actRecordBirthFilterRequest xmlns:ns6="http://smev.gosuslugi.ru/rev120315" xmlns:act="http://ezags.rt.ru/type/actor/" xmlns:com="http://ezags.rt.ru/type/common/" xmlns:doc="http://ezags.rt.ru/type/document/" xmlns:ext="http://ezags.rt.ru/type/externaldocuments/" xmlns:ns7="http://ezags.rt.ru/fzags/InterDepPersonalService/type/local/" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+      <ns6:Message>
+        <ns6:Sender>
+          <ns6:Code>FOIV01001</ns6:Code>
+          <ns6:Name>ФОИВ</ns6:Name>
+        </ns6:Sender>
+        <ns6:Recipient>
+          <ns6:Code>EZAG01001</ns6:Code>
+          <ns6:Name>еЗАГС</ns6:Name>
+        </ns6:Recipient>
+        <ns6:Originator>
+          <ns6:Code>FOIV01001</ns6:Code>
+          <ns6:Name>ФОИВ</ns6:Name>
+        </ns6:Originator>
+        <ns6:ServiceName>EZAGORDER10</ns6:ServiceName>
+        <ns6:TypeCode>GSRV</ns6:TypeCode>
+        <ns6:Status>RESULT</ns6:Status>
+        <ns6:Date>2013-08-07T14:46:02.581+04:00</ns6:Date>
+        <ns6:ExchangeType>1</ns6:ExchangeType>
+        <ns6:OriginRequestIdRef>0</ns6:OriginRequestIdRef>
+      </ns6:Message>
+      <ns6:MessageData>
+        <ns6:AppData id="AppData">
+          <ns7:birthFilterRequestObj>
+            <ns7:actRecordFilter>
+              <ns7:requisitesActRecordFilter>
+                <com:actRecordNumber>123</com:actRecordNumber>
+                <ns7:registerDate>
+                  <com:day>1</com:day>
+                  <com:month>5</com:month>
+                  <com:year>2012</com:year>
+                </ns7:registerDate>
+                <com:registrarId>440002</com:registrarId>
+                <ns7:IsRecovered>false</ns7:IsRecovered>
+              </ns7:requisitesActRecordFilter>
+            </ns7:actRecordFilter>
+            <ns7:child>
+              <ns7:lastName>Иванов</ns7:lastName>
+              <ns7:firstName>Иван</ns7:firstName>
+              <ns7:middleName>Иванович</ns7:middleName>
+              <ns7:birthDate>2013-07-01</ns7:birthDate>
+              <ns7:birthAddressFilter>
+                <com:rawAddressString>Москва</com:rawAddressString>
+              </ns7:birthAddressFilter>
+              <com:gender>male</com:gender>
+            </ns7:child>
+            <ns7:mother>
+              <ns7:lastName>Иванова</ns7:lastName>
+              <ns7:firstName>Мария</ns7:firstName>
+              <ns7:middleName>Петровна</ns7:middleName>
+              <ns7:birthDate>1983-06-01</ns7:birthDate>
+              <ns7:birthAddressFilter>
+                <com:rawAddressString>Москва</com:rawAddressString>
+              </ns7:birthAddressFilter>
+              <com:gender>female</com:gender>
+              <com:snils>000-000-000 11</com:snils>
+            </ns7:mother>
+            <ns7:father>
+              <ns7:lastName>Борцов</ns7:lastName>
+              <ns7:firstName>Дмитрий</ns7:firstName>
+              <ns7:middleName>Петрович</ns7:middleName>
+              <ns7:birthDate>1982-05-01</ns7:birthDate>
+              <ns7:birthAddressFilter>
+                <com:rawAddressString>Москва</com:rawAddressString>
+              </ns7:birthAddressFilter>
+              <com:gender>male</com:gender>
+              <com:snils>000-000-000 00</com:snils>
+            </ns7:father>
+            <ns7:expectedResult>act_record</ns7:expectedResult>
+          </ns7:birthFilterRequestObj>
+        </ns6:AppData>
+      </ns6:MessageData>
+    </ns6:actRecordBirthFilterRequest>
+  </S:Body>
+</S:Envelope>

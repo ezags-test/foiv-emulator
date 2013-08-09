@@ -1,0 +1,19 @@
+# config/application.yml
+defaults: &defaults
+  ezags:
+    url: 'http://192.168.157.183:8080'
+    service:
+      order: 'http://localhost:8080'
+
+
+development:
+  <<: *defaults
+
+develop:
+  <<: *defaults
+  ezags:
+    service:
+      order: '/InterDepPersonalService/InterDepPersonalServiceImpl'
+
+staging:
+  <<: *defaults
