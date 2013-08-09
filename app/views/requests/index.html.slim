@@ -1,1 +1,22 @@
-h1 Hello
+- content_for :title, 'Запрос в орган ЗАГС'
+
+
+= simple_form_for @filter, url: '', html: {class: 'form-horizontal'} do |s|
+  .well
+    = s.input :act_record_number
+    = s.input :register_period_from
+    = s.input :register_period_to
+    = s.input :registrar_id
+
+  .accordion
+    - %w(mother father child).each do |kind|
+      .accordion-group
+        .accordion-heading
+          a class="accordion-toggle" data-toggle="collapse" href="##{kind}" #{kind}
+
+        .accordion-body.collapse id="#{kind}"
+          .well
+            - PersonFilter.attributes_for(kind) do |attr|
+              = s.input attr
+
+  = s.submit 'Create'

@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'jazz_hands'
 gem 'slim-rails'
+gem 'simple_form'
+gem 'active_attr'
 
 
 # Bundle edge Rails instead:
@@ -41,6 +43,8 @@ group :assets do
   gem 'libv8', '~> 3.11.8.3', platform: :ruby
   gem 'uglifier', '>= 1.0.3'
   gem 'turbo-sprockets-rails3'
+
+  gem 'bootswatch-rails'
 end
 
 gem 'jquery-rails'

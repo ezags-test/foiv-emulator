@@ -19,7 +19,7 @@ html lang="en"
     = javascript_include_tag 'application'
 
   body
-    .navbar.navbar-top
+    .navbar.navbar-fixed-top
       .navbar-inner
         .container
           a.btn.btn-navbar data-target=".nav-collapse" data-toggle="collapse"
@@ -34,17 +34,12 @@ html lang="en"
               li= link_to 'Link 3', '/path3'
 
     .container
+      .page-header
+        h1= content_for(:title)
+
       .row
-        .span9
+        .span6.offset3
           = yield
-        .span3
-          .well.sidebar-nav
-            h3 Sidebar
-            ul.nav.nav-list
-              li.nav-header Sidebar
-              li= link_to 'Link 1', '/path1'
-              li= link_to 'Link 2', '/path2'
-              li= link_to 'Link 3', '/path3'
 
       footer
         p &copy; AT Consulting #{Date.today.year}

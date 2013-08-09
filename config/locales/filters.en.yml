@@ -1,0 +1,9 @@
+en:
+  simple_form:
+    labels:
+      defaults:
+        act_record_number: Номер актовой записи
+        register_date: Точная дата составления актовой записи
+        register_period_from: Дата начала периода регистрации актовой записи
+        register_period_to: Дата окончания периода регистрации актовой записи
+        registrar_id: Орган ЗАГС, составивший документ
