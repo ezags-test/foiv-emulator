@@ -17,6 +17,11 @@ gem 'foreman'
 gem 'capistrano'
 gem 'rvm-capistrano'
 
+gem 'httparty'
+gem 'mustache'
+
+gem 'settingslogic'
+gem 'rails_admin'
 
 group :development do
   gem 'meta_request'
