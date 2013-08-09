@@ -1,6 +1,22 @@
 class BirthRequest < Ezags
 
   class << self
+    def begin_search(params)
+       request = BuildRequest.new('search_filter_birth', params)
+       ticket  = send_filter(request.render)
+       return unless ticket
+       i=0
+       sleep 10
+       loop do
+         i+=1
+         request = BuildRequest.new('get_act_record_birth', { ticket: ticket })
+         result = get_result(request.render)
+         break if result[:status] == 'processed' || i==3
+         sleep 5
+       end
+    end
+
+
     def parse_result(response)
       result = response.first.last['Body']['actRecordBirthResponse']['MessageData']['AppData']['actRecordBirthResponseObj']
       if result
