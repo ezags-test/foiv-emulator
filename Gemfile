@@ -5,6 +5,7 @@ gem 'jazz_hands'
 gem 'slim-rails'
 gem 'simple_form'
 gem 'active_attr'
+gem 'settingslogic'
 
 
 # Bundle edge Rails instead:

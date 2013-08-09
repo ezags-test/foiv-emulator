@@ -1,6 +1,15 @@
 class RequestsController < ApplicationController
-  def index
+  before_filter :build_resource
+
+  def new
+  end
+
+  def create
+  end
+
+  private
+
+  def build_resource
     @filter = BirthFilter.new(params[:birth_filter])
-    render :index
   end
 end

@@ -1,0 +1,39 @@
+ru:
+  simple_form:
+    placeholders:
+      defaults:
+        last_name: Фамилия
+        first_name: Имя
+        middle_name: Отчество
+
+    labels:
+      defaults:
+        act_record_number: Номер АЗ
+        register_date: Точная дата составления АЗ
+        register_period_from: Дата от
+        register_period_to: Дата до
+        registrar_id: Орган ЗАГС
+        birth_place: Место рождения
+
+      birth_filter:
+        mother_fio: ФИО
+        mother_birth_period_from: Дата рождения от
+        mother_birth_period_to: Дата рождения до
+        mother_gender: Пол
+        mother_snils: СНИЛС
+        mother_birth_place: Место рождения
+
+        father_fio: ФИО
+        father_birth_period_from: Дата рождения от
+        father_birth_period_to: Дата рождения до
+        father_gender: Пол
+        father_snils: СНИЛС
+        father_birth_place: Место рождения
+
+        child_fio: ФИО
+        child_birth_period_from: Дата рождения от
+        child_birth_period_to: Дата рождения до
+        child_gender: Пол
+        child_snils: СНИЛС
+        child_birth_place: Место рождения
+

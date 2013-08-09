@@ -1,0 +1,34 @@
+- content_for :title, 'Запрос в орган ЗАГС'
+
+= simple_form_for @filter, url: '/requests', html: {class: 'form-horizontal'} do |form|
+  ul.nav.nav-tabs
+    li.active
+      a href="#base" data-toggle="tab" #{I18n.t(:meta_filter)}
+
+    - %w(mother father child).each do |kind|
+      li
+        a href="##{kind}" data-toggle="tab" #{I18n.t(kind)}
+
+  .tab-content
+    #base.tab-pane.active
+      = form.input :act_record_number
+      = form.input :register_period_from, as: :line_date, separate: true
+      = form.input :register_period_to, as: :line_date, separate: true
+      = form.input :registrar_id, as: :registrar
+
+    - %w(mother father child).each do |kind|
+      .tab-pane id="#{kind}"
+        = form.input :"#{kind}_fio", as: :fio, kind: kind
+
+        = form.input :"#{kind}_birth_period_from", as: :line_date, separate: true
+        = form.input :"#{kind}_birth_period_to", as: :line_date, separate: true
+        = form.input :"#{kind}_gender"
+        = form.input :"#{kind}_snils"
+
+        .fias-address(fias-address="{type: 'birth_place'}")
+          = form.input :birth_place do
+            = form.input_field :"#{kind}_birth_place_raw_address", placeholder: 'Начните вводить с населенного пункта...', class: 'fias-address-full-address input-xxlarge'
+            = form.hidden_field :"#{kind}_birth_place_fias_code", class: 'fias-address-fias input-xxlarge'
+            = form.hidden_field :"#{kind}_birth_place_kladr_code", class: 'fias-address-kladr input-xxlarge'
+
+  = form.submit 'Отправить запрос', class: 'btn btn-success'
