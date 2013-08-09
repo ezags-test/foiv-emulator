@@ -68,48 +68,71 @@ btAEdBxOcw==</SignatureValue>
           <ns7:birthFilterRequestObj>
             <ns7:actRecordFilter>
               <ns7:requisitesActRecordFilter>
-                <com:actRecordNumber>123</com:actRecordNumber>
-                <ns7:registerDate>
-                  <com:day>1</com:day>
-                  <com:month>5</com:month>
-                  <com:year>2012</com:year>
-                </ns7:registerDate>
-                <com:registrarId>440002</com:registrarId>
-                <ns7:IsRecovered>false</ns7:IsRecovered>
+                <com:actRecordNumber>{{ act_record_number }}</com:actRecordNumber>
+                <ns7:registerPeriod>
+                  <com:startDate>{{ register_period_from }}</com:startDate>
+                  <com:endDate>{{ register_period_to }}</com:endDate>
+                </ns7:registerPeriod>
+                <com:registrarId>{{ registrar_id }}</com:registrarId>
               </ns7:requisitesActRecordFilter>
             </ns7:actRecordFilter>
+            {{#child_last_name}}
             <ns7:child>
-              <ns7:lastName>Иванов</ns7:lastName>
-              <ns7:firstName>Иван</ns7:firstName>
-              <ns7:middleName>Иванович</ns7:middleName>
-              <ns7:birthDate>2013-07-01</ns7:birthDate>
+              <ns7:lastName>{{ child_last_name }}</ns7:lastName>
+              <ns7:firstName>{{ child_first_name }}</ns7:firstName>
+              {{#child_middle_name}}
+              <ns7:middleName>{{ child_middle_name }}</ns7:middleName>
+              {{/child_middle_name}}
+              <ns7:birthPeriod>
+                 <com:startDate>{{ child_birth_period_from }}</com:startDate>
+                 <com:endDate>{{ child_birth_period_to }}</com:endDate>
+              </ns7:birthPeriod>
+              {{#child_birth_place_raw_address}}
               <ns7:birthAddressFilter>
-                <com:rawAddressString>Москва</com:rawAddressString>
+                 <com:rawAddressString>{{ child_birth_place_raw_address }}</com:rawAddressString>
               </ns7:birthAddressFilter>
-              <com:gender>male</com:gender>
+              {{/child_birth_place_raw_address}}
+              {{#child_gender}}
+              <com:gender>{{child_gender_string}}</com:gender>
+              {{/child_gender}}
             </ns7:child>
+            {{/child_last_name}}
+            {{#mother_last_name}}
             <ns7:mother>
-              <ns7:lastName>Иванова</ns7:lastName>
-              <ns7:firstName>Мария</ns7:firstName>
-              <ns7:middleName>Петровна</ns7:middleName>
-              <ns7:birthDate>1983-06-01</ns7:birthDate>
+              <ns7:lastName>{{ mother_last_name }}</ns7:lastName>
+              <ns7:firstName>{{ mother_first_name }}</ns7:firstName>
+              {{#mother_middle_name}}
+              <ns7:middleName>{{ mother_middle_name }}</ns7:middleName>
+              {{/mother_middle_name}}
+              <ns7:birthPeriod>
+                 <com:startDate>{{ mother_birth_period_from }}</com:startDate>
+                 <com:endDate>{{ mother_birth_period_to }}</com:endDate>
+              </ns7:birthPeriod>
+              {{#mother_birth_place_raw_address}}
               <ns7:birthAddressFilter>
-                <com:rawAddressString>Москва</com:rawAddressString>
+                 <com:rawAddressString>{{ mother_birth_place_raw_address }}</com:rawAddressString>
               </ns7:birthAddressFilter>
-              <com:gender>female</com:gender>
-              <com:snils>000-000-000 11</com:snils>
+              {{/mother_birth_place_raw_address}}
             </ns7:mother>
+            {{/mother_last_name}}
+            {{#father_last_name}}
             <ns7:father>
-              <ns7:lastName>Борцов</ns7:lastName>
-              <ns7:firstName>Дмитрий</ns7:firstName>
-              <ns7:middleName>Петрович</ns7:middleName>
-              <ns7:birthDate>1982-05-01</ns7:birthDate>
+              <ns7:lastName>{{ father_last_name }}</ns7:lastName>
+              <ns7:firstName>{{ father_first_name }}</ns7:firstName>
+              {{#father_middle_name}}
+              <ns7:middleName>{{ father_middle_name }}</ns7:middleName>
+              {{/father_middle_name}}
+              <ns7:birthPeriod>
+                 <com:startDate>{{ father_birth_period_from }}</com:startDate>
+                 <com:endDate>{{ father_birth_period_to }}</com:endDate>
+              </ns7:birthPeriod>
+              {{#father_birth_place_raw_address}}
               <ns7:birthAddressFilter>
-                <com:rawAddressString>Москва</com:rawAddressString>
+                 <com:rawAddressString>{{ father_birth_place_raw_address }}</com:rawAddressString>
               </ns7:birthAddressFilter>
-              <com:gender>male</com:gender>
-              <com:snils>000-000-000 00</com:snils>
+              {{/father_birth_place_raw_address}}
             </ns7:father>
+            {{/father_last_name}}
             <ns7:expectedResult>act_record</ns7:expectedResult>
           </ns7:birthFilterRequestObj>
         </ns6:AppData>
