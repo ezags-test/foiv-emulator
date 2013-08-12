@@ -11,26 +11,28 @@
 
   .tab-content
     #base.tab-pane.active
-      = form.input :act_record_number
-      = form.input :register_period_from, as: :line_date, separate: true
-      = form.input :register_period_to, as: :line_date, separate: true
-      = form.input :registrar_id, as: :registrar
+      = form.input :act_record_number, required: true
+      = form.input :register_period_from, as: :line_date, separate: true, required: true
+      = form.input :register_period_to, as: :line_date, separate: true, required: true
+      = form.input :registrar_id, as: :registrar, required: true
 
     - %w(mother father child).each do |kind|
 
-      - case kind
-      - when 'child'
-        = form.input :"#{kind}_gender"
-      - when 'mother'
-        .hidden= form.input :"#{kind}_gender", selected: 'false'
-      - when 'father'
-        .hidden= form.input :"#{kind}_gender", selected: 'true'
-
       .tab-pane id="#{kind}"
-        = form.input :"#{kind}_fio", as: :fio, kind: kind
 
-        = form.input :"#{kind}_birth_period_from", as: :line_date, separate: true
-        = form.input :"#{kind}_birth_period_to", as: :line_date, separate: true
+        - case kind
+        - when 'child'
+          = form.input :"#{kind}_gender"
+        - when 'mother'
+          .hidden= form.input :"#{kind}_gender", selected: 'false'
+        - when 'father'
+          .hidden= form.input :"#{kind}_gender", selected: 'true'
+
+
+        = form.input :"#{kind}_fio", as: :fio, kind: kind, required: true
+
+        = form.input :"#{kind}_birth_period_from", as: :line_date, separate: true, required: true
+        = form.input :"#{kind}_birth_period_to", as: :line_date, separate: true, required: true
 
         .fias-address(fias-address="{type: 'birth_place'}")
           = form.input :birth_place do
