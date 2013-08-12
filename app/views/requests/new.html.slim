@@ -1,43 +1,94 @@
 - content_for :title, 'Запрос в орган ЗАГС'
 
-= simple_form_for @filter, url: '/requests', html: {class: 'form-horizontal'} do |form|
-  ul.nav.nav-tabs
-    li.active
-      a href="#base" data-toggle="tab" #{I18n.t(:meta_filter)}
+div ng-controller='RequestCtrl' ng-init="url = '#{websocket_url}'"
+  = simple_form_for @filter, url: '/', html: {class: 'form-horizontal'} do |form|
+    ul.nav.nav-tabs
+      li.active
+        a href="#base" data-toggle="tab" #{I18n.t(:meta_filter)}
 
-    - %w(mother father child).each do |kind|
-      li
-        a href="##{kind}" data-toggle="tab" #{I18n.t(kind)}
+      - %w(mother father child).each do |kind|
+        li
+          a href="##{kind}" data-toggle="tab" #{I18n.t(kind)}
 
-  .tab-content
-    #base.tab-pane.active
-      = form.input :act_record_number, required: true
-      = form.input :register_period_from, as: :line_date, separate: true, required: true
-      = form.input :register_period_to, as: :line_date, separate: true, required: true
-      = form.input :registrar_id, as: :registrar, required: true
+    .tab-content
+      #base.tab-pane.active
+        = form.input :act_record_number, required: true
+        = form.input :register_period_from, as: :line_date, separate: true, required: true
+        = form.input :register_period_to, as: :line_date, separate: true, required: true
+        = form.input :registrar_id, as: :registrar, required: true
 
-    - %w(mother father child).each do |kind|
+      - %w(mother father child).each do |kind|
 
-      .tab-pane id="#{kind}"
+        .tab-pane id="#{kind}"
 
-        - case kind
-        - when 'child'
-          = form.input :"#{kind}_gender"
-        - when 'mother'
-          .hidden= form.input :"#{kind}_gender", selected: 'false'
-        - when 'father'
-          .hidden= form.input :"#{kind}_gender", selected: 'true'
+          - case kind
+          - when 'child'
+            = form.input :"#{kind}_gender"
+          - when 'mother'
+            .hidden= form.input :"#{kind}_gender", selected: 'false'
+          - when 'father'
+            .hidden= form.input :"#{kind}_gender", selected: 'true'
 
 
-        = form.input :"#{kind}_fio", as: :fio, kind: kind, required: true
+          = form.input :"#{kind}_fio", as: :fio, kind: kind, required: true
 
-        = form.input :"#{kind}_birth_period_from", as: :line_date, separate: true, required: true
-        = form.input :"#{kind}_birth_period_to", as: :line_date, separate: true, required: true
+          = form.input :"#{kind}_birth_period_from", as: :line_date, separate: true, required: true
+          = form.input :"#{kind}_birth_period_to", as: :line_date, separate: true, required: true
 
-        .fias-address(fias-address="{type: 'birth_place'}")
-          = form.input :birth_place do
-            = form.input_field :"#{kind}_birth_place_raw_address", placeholder: 'Начните вводить с населенного пункта...', class: 'fias-address-full-address input-xxlarge'
-            = form.hidden_field :"#{kind}_birth_place_fias_code", class: 'fias-address-fias input-xxlarge'
-            = form.hidden_field :"#{kind}_birth_place_kladr_code", class: 'fias-address-kladr input-xxlarge'
+          .fias-address(fias-address="{type: 'birth_place'}")
+            = form.input :birth_place do
+              = form.input_field :"#{kind}_birth_place_raw_address", placeholder: 'Начните вводить с населенного пункта...', class: 'fias-address-full-address input-xxlarge'
+              = form.hidden_field :"#{kind}_birth_place_fias_code", class: 'fias-address-fias input-xxlarge'
+              = form.hidden_field :"#{kind}_birth_place_kladr_code", class: 'fias-address-kladr input-xxlarge'
 
-  = form.submit 'Отправить запрос', class: 'btn btn-success'
+    = form.submit 'Отправить запрос', class: 'btn btn-success', 'ng-show' => 'showSubmit'
+    button.disabled.btn.btn-warning ng-hide="showSubmit"
+      i.icon-white.icon-refresh
+      |  Ожидание ответа
+
+
+  .result ng-switch="result"
+    div ng-switch-when="pending"
+      dl
+        dt Статус обработки запроса
+        dd {{ status }}
+      dl
+        dt Результат поиска актовой записи
+        dd {{ resultSearch }}
+
+    div ng-switch-when="result_is_negative"
+      dl
+        dt Результат поиска актовой записи
+        dd {{ resultSearch }}
+      dl
+        dt Описание причины отказа в предоставлении сведений по актовой записи в соответсвующем объеме
+        dd {{ errorSearchDescription }}
+
+    div ng-switch-when="record_was_not_found"
+      dl
+        dt Результат поиска актовой записи
+        dd {{ resultSearch }}
+
+    div ng-switch-when="record_is_found"
+      dl
+        dt Текущее состояние актовой записи
+        dd {{ actRecordStatus }}
+      dl
+        dt UID
+        dd {{ actRecordUID }}
+      dl
+        dt Подпись СМЭВ
+        dd
+          pre.prettyprint.lang-xml.linenums {{ zagsSignature }}
+
+      dl
+        dt Подпись сотрудника ЗАГСа
+        dd
+          pre.prettyprint.lang-xml.linenums {{ smevSignature }}
+
+
+
+
+
+
+

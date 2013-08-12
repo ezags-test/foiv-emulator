@@ -1,0 +1,92 @@
+<%# encoding: utf-8 %>
+function RequestCtrl($scope, $http) {
+  var type_statuses = {
+  'pending':         '<%= I18n.t('status.pending') %>',
+  'sentToRzags':         '<%= I18n.t('status.sentToRzags') %>',
+  'processed':         '<%= I18n.t('status.processed') %>',
+  'refuse':         '<%= I18n.t('status.refuse') %>',
+  'timeout':         '<%= I18n.t('status.timeout') %>'
+  };
+  var type_results = {
+  'undefined':         '<%= I18n.t('result_search.undefined') %>',
+  'record_is_found':         '<%= I18n.t('result_search.record_is_found') %>',
+  'error_search':         '<%= I18n.t('result_search.error_search') %>',
+  'record_was_not_found':         '<%= I18n.t('result_search.record_was_not_found') %>',
+  'refine_search':         '<%= I18n.t('result_search.refine_search') %>'
+  };
+
+  var type_records = {
+  'actualled':         '<%= I18n.t('act_record_status.actualled') %>',
+  'cancelled':         '<%= I18n.t('act_record_status.cancelled') %>',
+  'marriage_dissolved':         '<%= I18n.t('act_record_status.marriage_dissolved') %>'
+  };
+
+
+  $scope.showSubmit = true;
+
+  $scope.$watch('url', function(url) {
+    var dispatcher = new WebSocketRails(url);
+    var channel = dispatcher.subscribe('response');
+    channel.bind('updated', function(newResponse) {
+      $scope.$apply(function() {
+        $scope.resultSearch = type_results[newResponse['resultSearch']];
+
+        if(newResponse['status'] == 'processed') {
+          if(newResponse['resultSearch']=='record_is_found') {
+            recordIsFound(newResponse);
+          } else if(newResponse['resultSearch'] == 'record_was_not_found') {
+            $scope.result = 'record_was_not_found';
+          } else {
+            resultIsNegative(newResponse);
+          }
+          $scope.showSubmit = true;
+        } else {
+          Pending(newResponse);
+        }
+      });
+    });
+  });
+
+  $('form').bind('submit', function() {
+    // валидация!
+    $scope.result = '';
+    $http({
+        method: 'POST',
+        url: '/requests.js',
+        data: $('form').serialize(true),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).
+      success(function(data, status, headers, config) {
+        $scope.showSubmit = false;
+      }).
+      error(function(data, status, headers, config) {
+        $scope.showSubmit = true;
+      });
+    return false;
+  });
+
+  function  recordIsFound(newResponse) {
+    $scope.actRecordUID = newResponse['actRecordUID'];
+    $scope.actRecordStatus = type_records[newResponse['actRecordStatus']];
+
+    $scope.zagsSignature = newResponse['zagsSignature'];
+    $scope.smevSignature = newResponse['smevSignature'];
+    prettyPrint();
+
+    $scope.result = 'record_is_found';
+  }
+
+  function Pending(newResponse) {
+    $scope.status = type_statuses[newResponse['status']];
+    $scope.result = 'pending';
+  }
+
+
+  function resultIsNegative(newResponse) {
+    $scope.errorSearchDescription = type_results[newResponse['errorSearchDescription']];
+    $scope.result = 'result_is_negative';
+  }
+
+}
+
+RequestCtrl.$inject = ['$scope', '$http'];
