@@ -24,6 +24,8 @@ gem 'mustache'
 gem 'settingslogic'
 gem 'rails_admin'
 
+gem 'websocket-rails'
+
 group :development do
   gem 'meta_request'
   gem 'binding_of_caller'
