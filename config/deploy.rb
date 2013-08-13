@@ -49,3 +49,5 @@ end
 
 after 'deploy:update', 'foreman:export'
 after 'deploy:update', 'deploy:cleanup'
+
+before 'foreman:restart', 'db:reset'
