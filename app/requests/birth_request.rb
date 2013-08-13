@@ -24,11 +24,12 @@ class BirthRequest < Ezags
 
 
             break if finished?(result[:status])
-            if i==3
+            if i==100
               WebsocketRails[:response].trigger(:updated,  { status: 'ttl' })
               break
             end
-            sleep 5
+            sleep_time = result[:status] == 'sentToRzags' ? 60 : 5
+            sleep sleep_time
           end
          end
       end
