@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require_tree ./base
  */
 
 @import url(//fonts.googleapis.com/css?family=Roboto&subset=latin,cyrillic);

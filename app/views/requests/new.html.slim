@@ -76,15 +76,18 @@ div ng-controller='RequestCtrl' ng-init="url = '#{websocket_url}'"
         dt Текущее состояние актовой записи
         dd {{ actRecordStatus }}
       dl
-        dt UID
-        dd {{ actRecordUID }}
+        dt Актовая запись
+        dd
+          = link_to "Посмотреть", "#act_record-modal", data: { toggle: "modal" }, class: 'btn btn-info'
+          #act_record-modal.modal.act_record-modal.hide.fade
+            = render 'act_record_modal'
       dl
-        dt Подпись СМЭВ
+        dt  Подпись АЗ
         dd
           pre.prettyprint.lang-xml.linenums {{ zagsSignature }}
 
       dl
-        dt Подпись сотрудника ЗАГСа
+        dt Подпись ответа на запрос
         dd
           pre.prettyprint.lang-xml.linenums {{ smevSignature }}
 
