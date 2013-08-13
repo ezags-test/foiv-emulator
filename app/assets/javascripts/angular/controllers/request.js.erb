@@ -5,6 +5,7 @@ function RequestCtrl($scope, $http) {
   'sentToRzags':         '<%= I18n.t('status.sentToRzags') %>',
   'processed':         '<%= I18n.t('status.processed') %>',
   'refuse':         '<%= I18n.t('status.refuse') %>',
+  'fault':         '<%= I18n.t('status.fault') %>',
   'timeout':         '<%= I18n.t('status.timeout') %>'
   };
   var type_results = {
@@ -40,6 +41,8 @@ function RequestCtrl($scope, $http) {
             resultIsNegative(newResponse);
           }
           $scope.showSubmit = true;
+        } else if(newResponse['status'] == 'fault') {
+          isFault(newResponse);
         } else {
           Pending(newResponse);
         }
@@ -81,11 +84,25 @@ function RequestCtrl($scope, $http) {
     $scope.result = 'pending';
   }
 
+  function isFault(newResponse) {
+    $scope.status = type_statuses[newResponse['status']];
+    $scope.result = 'fault';
+    $scope.showSubmit = true;
+  }
+
 
   function resultIsNegative(newResponse) {
     $scope.errorSearchDescription = type_results[newResponse['errorSearchDescription']];
     $scope.result = 'result_is_negative';
   }
+
+//  function validateParams() {
+//
+//    $('#base input.required, #base .required input').each(function( index ) {
+//       if(this.val() != "")
+//    });
+//
+//  }
 
 }
 

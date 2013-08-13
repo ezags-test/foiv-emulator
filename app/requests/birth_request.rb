@@ -5,22 +5,27 @@ class BirthRequest < Ezags
       Thread.new(params) do |params|
 
          request = BuildRequest.new('search_filter_birth', params)
-         ticket  = send_filter(request.render)
-         return unless ticket
-
-         i=0
-         sleep 10
-         loop do
-           i+=1
-           request = BuildRequest.new('get_act_record_birth', { ticket: ticket })
-           result = get_result(request.render)
-
-           WebsocketRails[:response].trigger(:updated, result)
-
-           break if finished?(result[:status]) || i==3
-           sleep 5
+         begin
+           ticket  = send_filter(request.render)
+         rescue
+            WebsocketRails[:response].trigger(:updated,  { status: 'fault' })
+           return
          end
 
+         if ticket
+          i=0
+          sleep 10
+          loop do
+            i+=1
+            request = BuildRequest.new('get_act_record_birth', { ticket: ticket })
+            result = get_result(request.render)
+
+            WebsocketRails[:response].trigger(:updated, result)
+
+            break if finished?(result[:status]) || i==3
+            sleep 5
+          end
+         end
       end
     end
 

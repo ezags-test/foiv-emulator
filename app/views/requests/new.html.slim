@@ -48,6 +48,12 @@ div ng-controller='RequestCtrl' ng-init="url = '#{websocket_url}'"
 
 
   .result ng-switch="result"
+
+    div ng-switch-when="fault"
+      dl
+        dt Статус обработки запроса
+        dd {{ status }}
+
     div ng-switch-when="pending"
       dl
         dt Статус обработки запроса
