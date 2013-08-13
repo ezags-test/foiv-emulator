@@ -34,7 +34,7 @@ develop:
 staging:
   <<: *defaults
   ezags:
-    url: 'http://192.168.157.183:8080'
+    url: 'http://192.168.100.165:8080'
     service:
       order: '/InterDepPersonalService/InterDepPersonalServiceImpl'
   rzags:
