@@ -1,7 +1,7 @@
 namespace :db do
   desc 'Run a task drop database and create new.'
   task :reset do
-    run("cd #{current_path} && RAILS_ENV=#{stage} #{rake} app:db:reset --trace")
+    run("cd #{current_path} && RAILS_ENV=#{stage} #{rake} db:reset --trace")
   end
 
   desc 'Run a task migrate database'
