@@ -6,6 +6,8 @@ function RequestCtrl($scope, $http) {
   'processed':         '<%= I18n.t('status.processed') %>',
   'refuse':         '<%= I18n.t('status.refuse') %>',
   'fault':         '<%= I18n.t('status.fault') %>',
+  'ttl':         '<%= I18n.t('status.ttl') %>',
+  'response':         '<%= I18n.t('status.response') %>',
   'timeout':         '<%= I18n.t('status.timeout') %>'
   };
   var type_results = {
@@ -40,11 +42,14 @@ function RequestCtrl($scope, $http) {
           } else {
             resultIsNegative(newResponse);
           }
-          $scope.showSubmit = true;
         } else if(newResponse['status'] == 'fault') {
           isFault(newResponse);
         } else {
           Pending(newResponse);
+        }
+
+        if(newResponse['status'] != 'pending'){
+          $scope.showSubmit = true;
         }
       });
     });
@@ -52,7 +57,8 @@ function RequestCtrl($scope, $http) {
 
   $('form').bind('submit', function() {
     // валидация!
-    $scope.result = '';
+    $scope.result = 'status';
+    $scope.status = type_statuses['response'];
     $http({
         method: 'POST',
         url: '/requests.js',
@@ -86,8 +92,7 @@ function RequestCtrl($scope, $http) {
 
   function isFault(newResponse) {
     $scope.status = type_statuses[newResponse['status']];
-    $scope.result = 'fault';
-    $scope.showSubmit = true;
+    $scope.result = 'status';
   }
 
 

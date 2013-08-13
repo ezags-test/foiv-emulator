@@ -4,7 +4,7 @@ class BirthRequest < Ezags
     def begin_search(params)
       Thread.new(params) do |params|
 
-         request = BuildRequest.new('search_filter_birth', params)
+         request = BuildRequest.new('search_filter_birth', params.delete_if {|_, value| value == '' })
          begin
            ticket  = send_filter(request.render)
          rescue
@@ -14,7 +14,7 @@ class BirthRequest < Ezags
 
          if ticket
           i=0
-          sleep 10
+          sleep 5
           loop do
             i+=1
             request = BuildRequest.new('get_act_record_birth', { ticket: ticket })
@@ -22,10 +22,19 @@ class BirthRequest < Ezags
 
             WebsocketRails[:response].trigger(:updated, result)
 
-            break if finished?(result[:status]) || i==3
+
+            break if finished?(result[:status])
+            if i==3
+              WebsocketRails[:response].trigger(:updated,  { status: 'ttl' })
+              break
+            end
             sleep 5
           end
          end
+      end
+
+      def finished?(status)
+        status.in? ['processed','refuse','timeout','fault']
       end
     end
 
@@ -72,7 +81,5 @@ class BirthRequest < Ezags
     end
   end
 
-  def finished?(status)
-      status.in? ['processed','refuse','timeout','fault']
-  end
+
 end

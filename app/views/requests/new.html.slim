@@ -42,14 +42,10 @@ div ng-controller='RequestCtrl' ng-init="url = '#{websocket_url}'"
               = form.hidden_field :"#{kind}_birth_place_kladr_code", class: 'fias-address-kladr input-xxlarge'
 
     = form.submit 'Отправить запрос', class: 'btn btn-success', 'ng-show' => 'showSubmit'
-    button.disabled.btn.btn-warning ng-hide="showSubmit"
-      i.icon-white.icon-refresh
-      |  Ожидание ответа
-
 
   .result ng-switch="result"
 
-    div ng-switch-when="fault"
+    div ng-switch-when="status"
       dl
         dt Статус обработки запроса
         dd {{ status }}

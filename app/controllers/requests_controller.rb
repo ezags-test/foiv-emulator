@@ -6,7 +6,7 @@ class RequestsController < ApplicationController
   end
 
   def create
-    BirthRequest.begin_search params[:birth_filter].delete_if {|_, value| value == '' }
+    BirthRequest.begin_search params[:birth_filter]
     render :nothing => true
   end
 
