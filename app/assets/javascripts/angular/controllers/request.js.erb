@@ -47,7 +47,7 @@ function RequestCtrl($scope, $http) {
             resultIsNegative(newResponse['errorSearchDescription']);
           }
         } else if(newResponse['status'] == 'fault') {
-          isFault(newResponse['status']);
+          showStatus(newResponse['status']);
         } else {
           Pending(newResponse['status']);
         }
@@ -62,9 +62,7 @@ function RequestCtrl($scope, $http) {
   $('form').bind('submit', function() {
     // валидация!
     $scope.showSubmit = false;
-    $scope.result = 'status';
-    $scope.status = type_statuses['response'];
-
+    showStatus('response');
 
     $http({
         method: 'POST',
@@ -103,7 +101,7 @@ function RequestCtrl($scope, $http) {
     $scope.result = 'pending';
   }
 
-  function isFault(status) {
+  function showStatus(status) {
     $scope.status = type_statuses[status];
     $scope.result = 'status';
   }
