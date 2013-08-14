@@ -6,8 +6,8 @@ class RequestsController < ApplicationController
   end
 
   def create
-    BirthRequest.begin_search params[:birth_filter]
-    render :nothing => true
+    ticket = BirthRequest.begin_search params[:birth_filter]
+    render json: { ticket: ticket }
   end
 
   private

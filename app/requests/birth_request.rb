@@ -1,18 +1,13 @@
 class BirthRequest < Ezags
 
   class << self
+
     def begin_search(params)
-      Thread.new(params) do |params|
+      request = BuildRequest.new('search_filter_birth', params.delete_if {|_, value| value == '' })
+      ticket  = send_filter(request.render) rescue nil
 
-         request = BuildRequest.new('search_filter_birth', params.delete_if {|_, value| value == '' })
-         begin
-           ticket  = send_filter(request.render)
-         rescue
-            WebsocketRails[:response].trigger(:updated,  { status: 'fault' })
-           return
-         end
-
-         if ticket
+      if ticket
+        Thread.new(params) do |params|
           i=0
           sleep 5
           loop do
@@ -20,25 +15,25 @@ class BirthRequest < Ezags
             request = BuildRequest.new('get_act_record_birth', { ticket: ticket })
             result = get_result(request.render)
 
-            WebsocketRails[:response].trigger(:updated, result)
-
+            WebsocketRails[:response].trigger(ticket, result)
 
             break if finished?(result[:status])
             if i==100
-              WebsocketRails[:response].trigger(:updated,  { status: 'ttl' })
+              WebsocketRails[:response].trigger(ticket,  { status: 'ttl' })
               break
             end
             sleep_time = result[:status] == 'sentToRzags' ? 60 : 5
             sleep sleep_time
           end
-         end
+        end
       end
 
-      def finished?(status)
-        status.in? ['processed','refuse','timeout','fault']
-      end
+      ticket
     end
 
+    def finished?(status)
+      status.in? ['processed','refuse','timeout','fault']
+    end
 
     def parse_result(response)
       result = response.first.last['Body']['actRecordBirthResponse']['MessageData']['AppData']['actRecordBirthResponseObj']
@@ -81,6 +76,5 @@ class BirthRequest < Ezags
       'Fault'
     end
   end
-
 
 end

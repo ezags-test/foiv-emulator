@@ -24,13 +24,17 @@ function RequestCtrl($scope, $http) {
   'marriage_dissolved':         '<%= I18n.t('act_record_status.marriage_dissolved') %>'
   };
 
+  var channel;
 
   $scope.showSubmit = true;
 
   $scope.$watch('url', function(url) {
     var dispatcher = new WebSocketRails(url);
-    var channel = dispatcher.subscribe('response');
-    channel.bind('updated', function(newResponse) {
+    channel = dispatcher.subscribe('response');
+  });
+
+  $scope.$watch('ticket', function(ticket) {
+    channel.bind(ticket, function(newResponse) {
       $scope.$apply(function() {
         $scope.resultSearch = type_results[newResponse['resultSearch']];
 
@@ -40,12 +44,12 @@ function RequestCtrl($scope, $http) {
           } else if(newResponse['resultSearch'] == 'record_was_not_found') {
             $scope.result = 'record_was_not_found';
           } else {
-            resultIsNegative(newResponse);
+            resultIsNegative(newResponse['errorSearchDescription']);
           }
         } else if(newResponse['status'] == 'fault') {
-          isFault(newResponse);
+          isFault(newResponse['status']);
         } else {
-          Pending(newResponse);
+          Pending(newResponse['status']);
         }
 
         if(newResponse['status'] != 'pending'){
@@ -57,8 +61,11 @@ function RequestCtrl($scope, $http) {
 
   $('form').bind('submit', function() {
     // валидация!
+    $scope.showSubmit = false;
     $scope.result = 'status';
     $scope.status = type_statuses['response'];
+
+
     $http({
         method: 'POST',
         url: '/requests.js',
@@ -66,7 +73,13 @@ function RequestCtrl($scope, $http) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).
       success(function(data, status, headers, config) {
-        $scope.showSubmit = false;
+        console.log(data['ticket']);
+        if(data['ticket']==null){
+          isFault('fault');
+          $scope.showSubmit = true;
+        } else {
+          $scope.ticket = data['ticket'];
+        }
       }).
       error(function(data, status, headers, config) {
         $scope.showSubmit = true;
@@ -85,19 +98,19 @@ function RequestCtrl($scope, $http) {
     $scope.result = 'record_is_found';
   }
 
-  function Pending(newResponse) {
-    $scope.status = type_statuses[newResponse['status']];
+  function Pending(status) {
+    $scope.status = type_statuses[status];
     $scope.result = 'pending';
   }
 
-  function isFault(newResponse) {
-    $scope.status = type_statuses[newResponse['status']];
+  function isFault(status) {
+    $scope.status = type_statuses[status];
     $scope.result = 'status';
   }
 
 
-  function resultIsNegative(newResponse) {
-    $scope.errorSearchDescription = type_results[newResponse['errorSearchDescription']];
+  function resultIsNegative(mes) {
+    $scope.errorSearchDescription = type_results[mes];
     $scope.result = 'result_is_negative';
   }
 
