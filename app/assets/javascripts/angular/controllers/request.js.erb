@@ -52,7 +52,7 @@ function RequestCtrl($scope, $http) {
           Pending(newResponse['status']);
         }
 
-        if(newResponse['status'] != 'pending'){
+        if(newResponse['status'] != 'pending' && newResponse['status'] != 'sentToRzags'){
           $scope.showSubmit = true;
         }
       });
